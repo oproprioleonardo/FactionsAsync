@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration name="main" monitorInterval="60">
+    <Appenders>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout>
+                <pattern>
+                    [%highlight{%-5level}] %d{yyyy-MM-dd HH:mm:ss} [%t] %c{1} - %msg%n
+                </pattern>>
+            </PatternLayout>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="io.vertx.core.logging.Log4j2LogDelegateFactory" level="info" additivity="false">
+            <AppenderRef ref="STDOUT"/>
+        </Logger>
+        <Root level="INFO" additivity="false">
+            <AppenderRef ref="STDOUT"/>
+        </Root>
+    </Loggers>
+</Configuration>

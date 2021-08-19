@@ -1,0 +1,17 @@
+{
+  "permissionError": "§cYou are not authorized to perform this task.",
+  "isNotPlayer": "§cYou are not a minecraft client player.",
+  "internal": {
+    "wait": "§eWait a moment... The operation is being performed.",
+    "failure": "§cAn internal error ocurred! Sorry for this."
+  },
+  "factionCreate": {
+    "success": "§aThe {tag} faction was created successfully.",
+    "error": {
+      "tagInvalid": "§cThe tag must contain 3 alphabetic characters.",
+      "nameInvalid": "§cThe name must contain between 5 to 16 alphabetic characters.",
+      "alreadyHasFaction": "§cYou are already part of a faction.",
+      "alreadyExistsTag": "§cThere is already a faction using this tag."
+    }
+  }
+}

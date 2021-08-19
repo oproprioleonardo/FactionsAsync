@@ -1,0 +1,6 @@
+name: FactionsAsync
+version: 0.1-beta
+main: com.leonardo.minecraft.factions.MinecraftFactions
+author: oproprioleonardo@gmail.com
+depend:
+  - NBTAPI
