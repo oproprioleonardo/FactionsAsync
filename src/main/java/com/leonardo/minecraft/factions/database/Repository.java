@@ -1,10 +1,6 @@
 package com.leonardo.minecraft.factions.database;
 
 import io.smallrye.mutiny.Uni;
-import io.vertx.mutiny.sqlclient.Row;
-import io.vertx.mutiny.sqlclient.Tuple;
-
-import java.io.Serializable;
 
 public interface Repository<O extends Entity> {
 

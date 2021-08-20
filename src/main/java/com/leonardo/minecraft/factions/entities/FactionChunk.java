@@ -24,5 +24,4 @@ public interface FactionChunk extends Entity {
     Chunk getChunk();
 
 
-
 }

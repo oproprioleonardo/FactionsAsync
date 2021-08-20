@@ -8,7 +8,6 @@ import com.leonardo.minecraft.factions.repositories.FactionRepository;
 import com.leonardo.minecraft.factions.services.FactionService;
 import io.smallrye.mutiny.Uni;
 import lombok.Getter;
-import org.ehcache.Cache;
 
 @Singleton
 public class FactionServiceImpl implements FactionService {
@@ -43,12 +42,8 @@ public class FactionServiceImpl implements FactionService {
     }
 
     @Override
-    public Uni<Faction> update(Faction obj, Manager<Faction> manager) {
-        final Cache<String, Faction> cache = manager.getCache();
-        if (cache.containsKey(obj.getTag())) {
-            cache.replace(obj.getTag(), obj);
-        }
-        return this.repository.update(obj);
+    public Uni<Faction> readByTag(String tag, Manager<Faction> manager) {
+        return this.repository.readByTag(tag).onItem().invoke(manager::load);
     }
 
     @Override

@@ -21,7 +21,7 @@ public class FactionRepositoryImpl extends VertxRepository<Faction> implements F
         final String query = String.format("SELECT * FROM %s WHERE tag = ?", getQueryPatterns().getTable());
         return this.getClient()
                    .withTransaction(sqlConnection -> sqlConnection.preparedQuery(query)
-                                                             .execute(Tuple.from(Lists.newArrayList(tag))))
+                                                                  .execute(Tuple.from(Lists.newArrayList(tag))))
                    .chain(rows -> Uni.createFrom().item(this.getQueryPatterns().buildObj(rows.iterator().next())));
     }
 
@@ -29,9 +29,10 @@ public class FactionRepositoryImpl extends VertxRepository<Faction> implements F
     public Uni<Boolean> existsTag(String tag) {
         final String query = String.format("SELECT id FROM %s WHERE tag = ?", getQueryPatterns().getTable());
         return this.getClient()
-                   .withTransaction(sqlConnection -> sqlConnection.preparedQuery(query).execute(Tuple.from(Lists.newArrayList(tag)))
-                                              .chain(rows -> Uni.createFrom()
-                                                                .item(rows.iterator().hasNext())));
+                   .withTransaction(sqlConnection -> sqlConnection.preparedQuery(query)
+                                                                  .execute(Tuple.from(Lists.newArrayList(tag)))
+                                                                  .chain(rows -> Uni.createFrom()
+                                                                                    .item(rows.iterator().hasNext())));
     }
 
     @Override

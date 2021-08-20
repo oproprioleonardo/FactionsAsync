@@ -194,7 +194,10 @@ public class Item {
             final SkullMeta skullMeta = (SkullMeta) this.getItemMeta();
             final Field profileField = skullMeta.getClass().getDeclaredField("profile");
             profileField.setAccessible(true);
-            final String json = ((GameProfile) profileField.get(skullMeta)).getProperties().get("textures").stream().filter(property -> property.getName().equals("textures")).findFirst().get().getValue();
+            final String json = ((GameProfile) profileField.get(skullMeta)).getProperties().get("textures").stream()
+                                                                           .filter(property -> property.getName()
+                                                                                                       .equals("textures"))
+                                                                           .findFirst().get().getValue();
             final JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
             url = jsonObject.getAsJsonObject("textures").getAsJsonObject("SKIN").get("url").getAsString();
         } catch (Exception ignored) {
@@ -207,7 +210,8 @@ public class Item {
             if (url == null || url.isEmpty()) return this;
             final SkullMeta skullMeta = (SkullMeta) this.getItemMeta();
             final GameProfile profile = new GameProfile(UUID.randomUUID(), null);
-            final byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes());
+            final byte[] encodedData =
+                    Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes());
             profile.getProperties().put("textures", new Property("textures", new String(encodedData)));
             Field profileField = skullMeta.getClass().getDeclaredField("profile");
             profileField.setAccessible(true);

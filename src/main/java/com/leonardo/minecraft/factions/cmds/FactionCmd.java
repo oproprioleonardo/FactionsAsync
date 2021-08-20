@@ -31,6 +31,20 @@ public class FactionCmd extends BaseCommand {
     @Inject
     private MUserManager userManager;
 
+    @Subcommand(value = "invite")
+    @Syntax(value = "/faction invite (username)")
+    @Description(value = "This command invites the user to faction")
+    public void invite(CommandSender sender, String[] args) {
+        if (!(sender instanceof Player)) {
+            sender.sendMessage(MessagesManager.IS_NOT_PLAYER);
+            return;
+        }
+        userManager.require(sender.getName().toLowerCase(Locale.ROOT)).chain(user -> {
+            //todo calls invite member method
+            return Uni.createFrom().nothing();
+        }).await().indefinitely();
+    }
+
     @Subcommand(value = "create")
     @Syntax(value = "/faction create (tag) (name)")
     @Description(value = "This command creates a faction")

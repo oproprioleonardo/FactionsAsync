@@ -51,14 +51,16 @@ public class InventoryMaker {
     }
 
     public InventoryMaker onClose(Consumer<InventoryCloseEvent> consumer) {
-        final HashMap<InventoryMaker, Consumer<InventoryCloseEvent>> consumers = InventoryController.getConsumersOnClose();
+        final HashMap<InventoryMaker, Consumer<InventoryCloseEvent>> consumers =
+                InventoryController.getConsumersOnClose();
         if (consumers.containsKey(this)) consumers.replace(this, consumer);
         else consumers.put(this, consumer);
         return this;
     }
 
     public InventoryMaker onClick(Consumer<InventoryClickEvent> consumer) {
-        final HashMap<InventoryMaker, Consumer<InventoryClickEvent>> consumers = InventoryController.getConsumersOnClick();
+        final HashMap<InventoryMaker, Consumer<InventoryClickEvent>> consumers =
+                InventoryController.getConsumersOnClick();
         if (consumers.containsKey(this)) consumers.replace(this, consumer);
         else consumers.put(this, consumer);
         return this;

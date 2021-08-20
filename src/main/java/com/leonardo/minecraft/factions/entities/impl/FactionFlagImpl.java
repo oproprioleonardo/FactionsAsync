@@ -1,7 +1,6 @@
 package com.leonardo.minecraft.factions.entities.impl;
 
 import com.leonardo.minecraft.factions.FactionFlagType;
-import com.leonardo.minecraft.factions.database.Entity;
 import com.leonardo.minecraft.factions.entities.FactionFlag;
 import lombok.Data;
 

@@ -40,9 +40,12 @@ public class WhenPlayerJoin implements Listener {
         }).onItem().call(user -> {
             final MUserLoadEvent userLoadEvent = new MUserLoadEvent(e.getPlayer(), user);
             Bukkit.getPluginManager().callEvent(userLoadEvent);
-            return factionManager.load(factionService.readById(user.getFactionId()))
+            return factionService.readById(user.getFactionId())
                                  .onItem()
-                                 .invoke(faction -> Bukkit.getPluginManager().callEvent(new FactionLoadEvent(faction)));
+                                 .invoke(faction -> {
+                                     factionManager.load(faction);
+                                     Bukkit.getPluginManager().callEvent(new FactionLoadEvent(faction));
+                                 });
         }).await().indefinitely();
     }
 

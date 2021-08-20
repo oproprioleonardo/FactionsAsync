@@ -11,5 +11,5 @@ public interface FactionService extends Service<Faction> {
 
     Uni<Boolean> existsTag(String tag);
 
-    Uni<Faction> update(Faction obj, Manager<Faction> manager);
+    Uni<Faction> readByTag(String tag, Manager<Faction> manager);
 }

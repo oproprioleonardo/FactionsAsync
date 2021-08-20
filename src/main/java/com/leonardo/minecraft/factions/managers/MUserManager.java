@@ -1,45 +1,46 @@
 package com.leonardo.minecraft.factions.managers;
 
+import com.github.benmanes.caffeine.cache.AsyncCache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.RemovalCause;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.leonardo.minecraft.factions.entities.MinecraftUser;
 import com.leonardo.minecraft.factions.services.MUserService;
 import io.smallrye.mutiny.Uni;
 import lombok.Getter;
-import org.ehcache.Cache;
-import org.ehcache.config.builders.CacheConfigurationBuilder;
-import org.ehcache.config.builders.CacheManagerBuilder;
-import org.ehcache.config.builders.ExpiryPolicyBuilder;
-import org.ehcache.config.builders.ResourcePoolsBuilder;
 
-import java.time.Duration;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 @Getter
 @Singleton
 public class MUserManager implements Manager<MinecraftUser> {
 
-    private final Cache<String, MinecraftUser> cache =
-            CacheManagerBuilder.newCacheManagerBuilder().build()
-                               .createCache("minecraft_users",
-                                            CacheConfigurationBuilder
-                                                    .newCacheConfigurationBuilder(String.class, MinecraftUser.class,
-                                                                                  ResourcePoolsBuilder.heap(2000))
-                                                    .withExpiry(
-                                                            ExpiryPolicyBuilder.timeToIdleExpiration(
-                                                                    Duration.ofSeconds(300)
-                                                            )
-                                                    ));
+    private AsyncCache<String, MinecraftUser> cache;
     @Inject
     private MUserService service;
 
+    @Inject
+    private void loadCache(MUserService service) {
+        this.cache = Caffeine.newBuilder()
+                             .expireAfterAccess(300, TimeUnit.SECONDS)
+                             .removalListener(
+                                     (String id, MinecraftUser user, RemovalCause removalCause) -> service.update(user)
+                                                                                                          .await()
+                                                                                                          .indefinitely())
+                             .maximumSize(2_000)
+                             .buildAsync();
+    }
+
     public Uni<MinecraftUser> require(String username) {
-        return getCache().containsKey(username) ? Uni.createFrom().item(getCache().get(username)) :
-               getService().readByUsername(username);
+        return Uni.createFrom().completionStage(this.cache.getIfPresent(username)).onFailure()
+                  .recoverWithUni(this.service.readByUsername(username));
     }
 
     @Override
-    public Uni<MinecraftUser> load(Uni<MinecraftUser> uni) {
-        return uni.onItem().invoke(user -> getCache().putIfAbsent(user.getUsername(), user));
+    public void load(MinecraftUser user) {
+        this.cache.put(user.getUsername(), CompletableFuture.completedFuture(user));
     }
 
 }

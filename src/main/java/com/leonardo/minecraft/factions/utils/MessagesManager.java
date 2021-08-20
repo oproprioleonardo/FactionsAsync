@@ -76,8 +76,10 @@ public class MessagesManager {
 
         public Error error;
         public String success;
+
         @Data
         public static class Error {
+
             public String tagInvalid;
             public String alreadyHasFaction;
             public String nameInvalid;

@@ -12,7 +12,7 @@ public class FactionQueries extends QueryPatterns<Faction> {
     public FactionQueries() {
         super("factions",
               "INSERT INTO factions (tag, name, leader_username, description, motd, nexus_spawned, created_at_millis) " +
-                          "VALUES (?, ?, ?, ?, ?, ?, ?)",
+              "VALUES (?, ?, ?, ?, ?, ?, ?)",
               "UPDATE factions set leader_username = ?, description = ?, motd = ?, nexus_spawned = ? WHERE id = ?",
               "INSERT INTO factions (id, tag, name, leader_username, description, motd, nexus_spawned, created_at_millis) " +
               "VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE leader_username = ?, description = ?, " +

@@ -19,8 +19,6 @@ import java.util.function.Consumer;
 @Singleton
 public class InventoryController implements Listener {
 
-    @Inject
-    private Plugin plugin;
     @Getter
     private static final HashMap<InventoryMaker, Consumer<InventoryClickEvent>> consumersOnClick;
     @Getter
@@ -31,6 +29,9 @@ public class InventoryController implements Listener {
         consumersOnClose = Maps.newHashMap();
     }
 
+    @Inject
+    private Plugin plugin;
+
     @EventHandler
     public void onClick(InventoryClickEvent event) {
         for (InventoryMaker inventoryMaker : consumersOnClick.keySet()) {
@@ -39,7 +40,8 @@ public class InventoryController implements Listener {
             if (inventory == null) return;
             if (inventory.equals(event.getInventory())) {
                 if (consumer != null) {
-                    if (event.getInventory() != null && event.getInventory().equals(event.getWhoClicked().getInventory()))
+                    if (event.getInventory() != null &&
+                        event.getInventory().equals(event.getWhoClicked().getInventory()))
                         consumer.accept(event);
                 }
                 if (inventoryMaker.isCancellable()) event.setCancelled(true);

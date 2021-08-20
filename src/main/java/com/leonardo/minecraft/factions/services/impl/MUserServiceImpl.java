@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.leonardo.minecraft.factions.database.Repository;
 import com.leonardo.minecraft.factions.entities.MinecraftUser;
+import com.leonardo.minecraft.factions.managers.Manager;
 import com.leonardo.minecraft.factions.repositories.MUserRepository;
 import com.leonardo.minecraft.factions.services.MUserService;
 import io.smallrye.mutiny.Uni;
@@ -27,6 +28,11 @@ public class MUserServiceImpl implements MUserService {
     @Override
     public Uni<MinecraftUser> readByUsername(String username) {
         return this.repository.readByUsername(username);
+    }
+
+    @Override
+    public Uni<MinecraftUser> readByUsername(String username, Manager<MinecraftUser> manager) {
+        return this.repository.readByUsername(username).onItem().invoke(manager::load);
     }
 
     @Override

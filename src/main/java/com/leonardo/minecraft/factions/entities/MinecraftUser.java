@@ -1,7 +1,7 @@
 package com.leonardo.minecraft.factions.entities;
 
-import com.leonardo.minecraft.factions.database.Entity;
 import com.leonardo.minecraft.factions.UserRole;
+import com.leonardo.minecraft.factions.database.Entity;
 
 import java.util.Set;
 
