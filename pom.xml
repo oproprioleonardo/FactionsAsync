@@ -51,6 +51,10 @@
             <url>https://repo.codemc.org/repository/maven-public/</url>
             <layout>default</layout>
         </repository>
+        <repository>
+            <id>janmm14-public</id>
+            <url>https://repo.janmm14.de/artifactory/public</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -103,9 +107,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
-            <version>3.9.4</version>
+            <groupId>de.janmm14</groupId>
+            <artifactId>jsonmessagemaker</artifactId>
+            <version>3.2.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

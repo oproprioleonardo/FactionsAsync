@@ -1,9 +1,22 @@
 {
   "permissionError": "§cVocê não está autorizado para executar esta tarefa.",
-  "isNotPlayer": "§cVocê não é um jogador cliente de Minecraft.",
+  "isNotPlayer": "§cVocê não está jogando por um cliente de Minecraft.",
+  "targetHasFaction": "§cO jogador já tem uma facção.",
+  "targetHasNotFaction": "§cO jogador não tem uma facção.",
+  "hasNotFaction": "§cVocê não está em uma facção.",
   "internal": {
     "wait": "§eAguarde um momento... A operação está sendo realizada.",
-    "failure": "§cUm erro interno ocorreu! Desculpe por isso."
+    "failure": "§cUm erro interno ocorreu! Desculpe por isso.",
+    "userNotFound": "§cO usuário não foi encontrado.",
+    "factionNotFound": "§cA facção não foi encontrada."
+  },
+  "factionInvite": {
+    "sended": "§aO convite para a facção foi enviado com sucesso.",
+    "accepted": "§aVocê aceitou o convite para entrar na facção.",
+    "refused": "§cVocê rejeitou o convite para entrar na facção.",
+    "received": "§eVocê recebeu um convite para entrar em uma facção.",
+    "userNotFound": "§cO usuário não foi encontrado.",
+    "factionNotFound": "§cA facção não foi encontrada."
   },
   "factionCreate": {
     "success": "§aA facção {tag} foi criada com êxito.",

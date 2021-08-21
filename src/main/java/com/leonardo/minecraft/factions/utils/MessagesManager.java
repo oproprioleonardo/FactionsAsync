@@ -15,25 +15,33 @@ public class MessagesManager {
 
     public static String PERMISSION_ERROR;
     public static String IS_NOT_PLAYER;
+    public static String TARGET_HAS_FACTION;
+    public static String TARGET_HAS_NOT_FACTION;
+    public static String HAS_NOT_FACTION;
     public static FactionCreate FACTION_CREATE;
+    public static FactionInvite FACTION_INVITE;
     public static Internal INTERNAL;
-    private static Messages messages;
 
     static {
         final Plugin plugin = Bukkit.getPluginManager().getPlugin("MinecraftFactions");
         createLanguagesFiles(plugin);
         loadLanguages(plugin);
-        PERMISSION_ERROR = messages.permissionError;
-        IS_NOT_PLAYER = messages.isNotPlayer;
-        INTERNAL = messages.internal;
-        FACTION_CREATE = messages.factionCreate;
+
     }
 
     private static void loadLanguages(Plugin plugin) {
         final File file = new File(plugin.getDataFolder() + "/languages/" + ConfigManager.LANGUAGE);
         final Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
-            messages = gson.fromJson(new FileReader(file), Messages.class);
+            final Messages messages = gson.fromJson(new FileReader(file), Messages.class);
+            PERMISSION_ERROR = messages.permissionError;
+            IS_NOT_PLAYER = messages.isNotPlayer;
+            INTERNAL = messages.internal;
+            TARGET_HAS_FACTION = messages.targetHasFaction;
+            TARGET_HAS_NOT_FACTION = messages.targetHasNotFaction;
+            HAS_NOT_FACTION = messages.hasNotFaction;
+            FACTION_CREATE = messages.factionCreate;
+            FACTION_INVITE = messages.factionInvite;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,8 +66,12 @@ public class MessagesManager {
 
         private String permissionError;
         private String isNotPlayer;
+        private String targetHasFaction;
+        private String targetHasNotFaction;
+        private String hasNotFaction;
         private Internal internal;
         private FactionCreate factionCreate;
+        private FactionInvite factionInvite;
 
     }
 
@@ -68,6 +80,18 @@ public class MessagesManager {
 
         public String wait;
         public String failure;
+        public String userNotFound;
+        public String factionNotFound;
+
+    }
+
+    @Data
+    public static class FactionInvite {
+
+        public String sended;
+        public String received;
+        public String accepted;
+        public String refused;
 
     }
 

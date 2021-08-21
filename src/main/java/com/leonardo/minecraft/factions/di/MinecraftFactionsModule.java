@@ -5,6 +5,9 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.leonardo.minecraft.factions.MinecraftFactions;
+import com.leonardo.minecraft.factions.cache.UserInvites;
+import com.leonardo.minecraft.factions.managers.FactionManager;
+import com.leonardo.minecraft.factions.managers.MUserManager;
 import com.leonardo.minecraft.factions.repositories.FactionRepository;
 import com.leonardo.minecraft.factions.repositories.MUserRepository;
 import com.leonardo.minecraft.factions.repositories.impl.FactionRepositoryImpl;
@@ -30,6 +33,9 @@ public class MinecraftFactionsModule extends AbstractModule {
         bind(MUserRepository.class).to(MUserRepositoryImpl.class);
         bind(FactionService.class).to(FactionServiceImpl.class);
         bind(MUserService.class).to(MUserServiceImpl.class);
+        bind(FactionManager.class);
+        bind(MUserManager.class);
+        bind(UserInvites.class);
         bind(BukkitCommandManager.class).toInstance(new BukkitCommandManager(this.core));
     }
 

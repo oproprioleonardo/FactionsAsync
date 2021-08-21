@@ -2,6 +2,9 @@ package com.leonardo.minecraft.factions.entities;
 
 import com.leonardo.minecraft.factions.UserRole;
 import com.leonardo.minecraft.factions.database.Entity;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import java.util.Set;
 
@@ -56,7 +59,15 @@ public interface MinecraftUser extends Entity {
     void setMapAutoUpdating(boolean mapAutoUpdating);
 
     default boolean hasFaction() {
-        return getFactionId() != 0;
+        return this.getFactionId() != 0;
+    }
+
+    default Player getPlayer() {
+        return Bukkit.getPlayer(this.getUsername());
+    }
+
+    default OfflinePlayer getOfflinePlayer() {
+        return Bukkit.getOfflinePlayer(this.getUsername());
     }
 
 }

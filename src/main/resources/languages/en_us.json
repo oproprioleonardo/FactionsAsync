@@ -1,9 +1,20 @@
 {
   "permissionError": "§cYou are not authorized to perform this task.",
-  "isNotPlayer": "§cYou are not a minecraft client player.",
+  "isNotPlayer": "§cYou are not playing through a Minecraft client.",
+  "targetHasFaction": "§cThe player already has a faction.",
+  "targetHasNotFaction": "§cThe player does not have a faction.",
+  "hasNotFaction": "§cYou are not in a faction.",
   "internal": {
     "wait": "§eWait a moment... The operation is being performed.",
-    "failure": "§cAn internal error ocurred! Sorry for this."
+    "failure": "§cAn internal error ocurred! Sorry for this.",
+    "userNotFound": "§cThe user is not found.",
+    "factionNotFound": "§cThe faction is not found."
+  },
+  "factionInvite": {
+    "sended": "§aThe faction invitation has been sent successfully.",
+    "accepted": "§aYou have accepted the invitation to join the faction.",
+    "refused": "§cYou rejected the invitation to join the faction.",
+    "received": "§eYou have received an invitation to join a faction."
   },
   "factionCreate": {
     "success": "§aThe {tag} faction was created successfully.",
