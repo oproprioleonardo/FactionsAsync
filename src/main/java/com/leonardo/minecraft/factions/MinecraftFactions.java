@@ -9,6 +9,7 @@ import com.leonardo.minecraft.factions.cmds.FactionCmd;
 import com.leonardo.minecraft.factions.di.MinecraftFactionsModule;
 import com.leonardo.minecraft.factions.listeners.WhenPlayerJoin;
 import com.leonardo.minecraft.factions.services.FactionService;
+import com.leonardo.minecraft.factions.services.MUserService;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -18,7 +19,9 @@ public class MinecraftFactions extends JavaPlugin {
 
     private Injector injector;
     @Inject
-    private FactionService service;
+    private FactionService factionService;
+    @Inject
+    private MUserService mUserService;
     @Inject
     private BukkitCommandManager manager;
 
@@ -27,6 +30,8 @@ public class MinecraftFactions extends JavaPlugin {
     public void onEnable() {
         this.injector = Guice.createInjector(MinecraftFactionsModule.of(this));
         this.injector.injectMembers(this);
+        factionService.createTable();
+        mUserService.createTable();
         this.registerCommands();
     }
 
@@ -48,6 +53,7 @@ public class MinecraftFactions extends JavaPlugin {
     }
 
     private <O extends BaseCommand> void registerCommand(Class<O> baseCommandClass) {
+
         this.manager.registerCommand(this.getInstance(baseCommandClass));
     }
 

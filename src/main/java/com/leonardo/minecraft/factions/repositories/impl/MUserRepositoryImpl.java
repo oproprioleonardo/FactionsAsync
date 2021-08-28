@@ -32,7 +32,7 @@ public class MUserRepositoryImpl extends VertxRepository<MinecraftUser> implemen
         return pool.query("CREATE TABLE IF NOT EXISTS m_users(" +
                           "id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT, " +
                           "username VARCHAR(16) NOT NULL, " +
-                          "user_role TINYINT NOT NULL" +
+                          "user_role TINYINT NOT NULL," +
                           "faction_id BIGINT(20) UNSIGNED, " +
                           "kills INT UNSIGNED NOT NULL, " +
                           "deaths INT UNSIGNED NOT NULL, " +
@@ -40,7 +40,7 @@ public class MUserRepositoryImpl extends VertxRepository<MinecraftUser> implemen
                           "power DOUBLE UNSIGNED NOT NULL, " +
                           "power_max DOUBLE UNSIGNED NOT NULL, " +
                           "PRIMARY KEY (id), " +
-                          "UNIQUE (tag)" +
+                          "UNIQUE (username)" +
                           ")").execute().replaceWithVoid();
     }
 }

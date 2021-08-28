@@ -1,6 +1,6 @@
 package com.leonardo.minecraft.factions.managers;
 
-import com.github.benmanes.caffeine.cache.AsyncCache;
+import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.RemovalCause;
 import com.google.inject.Inject;
@@ -10,14 +10,13 @@ import com.leonardo.minecraft.factions.services.FactionService;
 import io.smallrye.mutiny.Uni;
 import lombok.Getter;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 @Singleton
 @Getter
 public class FactionManager implements Manager<Faction> {
 
-    private AsyncCache<String, Faction> cache;
+    private Cache<String, Faction> cache;
     @Inject
     private FactionService service;
 
@@ -30,16 +29,18 @@ public class FactionManager implements Manager<Faction> {
                                                                                                        .await()
                                                                                                        .indefinitely())
                              .maximumSize(2_000)
-                             .buildAsync();
+                             .build();
     }
 
     public Uni<Faction> require(String tag) {
-        return Uni.createFrom().completionStage(this.cache.getIfPresent(tag)).onFailure()
-                  .recoverWithUni(this.service.readByTag(tag));
+        return Uni.createFrom().item(() -> this.cache.getIfPresent(tag))
+                  .onItem()
+                  .ifNull()
+                  .switchTo(this.service.readByTag(tag));
     }
 
     @Override
     public void load(Faction faction) {
-        this.cache.put(faction.getTag(), CompletableFuture.completedFuture(faction));
+        this.cache.put(faction.getTag(), faction);
     }
 }

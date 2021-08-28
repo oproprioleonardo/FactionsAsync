@@ -9,6 +9,7 @@ import com.leonardo.minecraft.factions.managers.FactionManager;
 import com.leonardo.minecraft.factions.managers.MUserManager;
 import com.leonardo.minecraft.factions.services.FactionService;
 import com.leonardo.minecraft.factions.services.MUserService;
+import io.smallrye.mutiny.Uni;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -33,19 +34,21 @@ public class WhenPlayerJoin implements Listener {
     @EventHandler
     public void onEvent(PlayerJoinEvent e) {
         final String username = e.getPlayer().getName().toLowerCase(Locale.ROOT);
-        mUserManager.require(username).onFailure().call(() -> {
+        mUserManager.require(username).onItem().ifNull().switchTo(() -> {
             final MinecraftUserImpl user = new MinecraftUserImpl();
             user.setUsername(username);
             return mUserService.create(user);
         }).onItem().call(user -> {
             final MUserLoadEvent userLoadEvent = new MUserLoadEvent(e.getPlayer(), user);
             Bukkit.getPluginManager().callEvent(userLoadEvent);
-            return factionService.readById(user.getFactionId())
-                                 .onItem()
-                                 .invoke(faction -> {
-                                     factionManager.load(faction);
-                                     Bukkit.getPluginManager().callEvent(new FactionLoadEvent(faction));
-                                 });
+            if (user.getFactionId() != 0)
+                return factionService.readById(user.getFactionId())
+                                     .onItem()
+                                     .invoke(faction -> {
+                                         factionManager.load(faction);
+                                         Bukkit.getPluginManager().callEvent(new FactionLoadEvent(faction));
+                                     });
+            return Uni.createFrom().voidItem();
         }).await().indefinitely();
     }
 

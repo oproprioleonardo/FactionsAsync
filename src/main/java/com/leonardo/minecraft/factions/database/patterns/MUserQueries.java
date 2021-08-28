@@ -11,14 +11,14 @@ import io.vertx.mutiny.sqlclient.Tuple;
 public class MUserQueries extends QueryPatterns<MinecraftUser> {
 
     public MUserQueries() {
-        super("minecraft_users",
-              "INSERT INTO minecraft_users " +
+        super("m_users",
+              "INSERT INTO m_users " +
               "(username, faction_id, user_role, kills, deaths, last_activity_millis, power, power_max) " +
               "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-              "UPDATE minecraft_users " +
+              "UPDATE m_users " +
               "set faction_id = ?, user_role = ?, kills = ?, deaths = ?, last_activity_millis = ?, power = ?, power_max = ? " +
               "WHERE id = ?",
-              "INSERT INTO minecraft_users (id, username, faction_id, user_role, kills, deaths, last_activity_millis, power, power_max) " +
+              "INSERT INTO m_users (id, username, faction_id, user_role, kills, deaths, last_activity_millis, power, power_max) " +
               "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) " +
               "ON DUPLICATE KEY UPDATE " +
               "set faction_id = ?, user_role = ?, kills = ?, deaths = ?, last_activity_millis = ?, power = ?, power_max = ?");

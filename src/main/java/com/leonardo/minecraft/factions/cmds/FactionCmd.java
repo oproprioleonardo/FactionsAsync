@@ -6,6 +6,7 @@ import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.leonardo.minecraft.factions.cache.UserInvites;
 import com.leonardo.minecraft.factions.entities.MinecraftUser;
 import com.leonardo.minecraft.factions.entities.impl.FactionImpl;
@@ -25,6 +26,7 @@ import org.bukkit.entity.Player;
 import java.util.Locale;
 
 @CommandAlias(value = "faction|f|fac")
+@Singleton
 public class FactionCmd extends BaseCommand {
 
     @Inject
@@ -40,6 +42,7 @@ public class FactionCmd extends BaseCommand {
     @Syntax(value = "/faction invite (username)")
     @Description(value = "This command invites the user to faction")
     public void invite(CommandSender sender, String[] args) {
+
         //todo concat "accept" and "refuse" tasks
         if (args.length != 2) return;
         final String target = args[1];
@@ -115,8 +118,6 @@ public class FactionCmd extends BaseCommand {
                                       .onFailure()
                                       .invoke(() -> sender.sendMessage(MessagesManager.INTERNAL.failure));
         }).await().indefinitely();
-
-
     }
 
 }
